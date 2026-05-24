@@ -616,7 +616,10 @@ export default function HarvestPage() {
                 <div style={{ textAlign: "right" }}>
                   <div style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: "rgba(255,255,255,0.24)", letterSpacing: "0.1em", marginBottom: 2 }}>ONGOING MONTHLY VALUE</div>
                   <div style={{ fontFamily: "var(--font-bricolage)", fontSize: 18, fontWeight: 800, color: accent }}>
-                    ${Math.round(Object.entries(spend).reduce((sum, [k, v]) => sum + v * (card.earnRate?.[k] ?? 1) * 0.008, 0)).toLocaleString()}
+                    Object.entries(spend).reduce((sum, [k, v]) => {
+                      const key = k as keyof EarnRate;
+                      return sum + v * (card.earnRate?.[key] ?? 1) * 0.008;
+                    }, 0)
                     <span style={{ fontSize: 11, fontWeight: 400, color: "rgba(255,255,255,0.3)", marginLeft: 3 }}>/mo</span>
                   </div>
                 </div>
